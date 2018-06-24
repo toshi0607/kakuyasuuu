@@ -8,7 +8,6 @@ import (
 
 var page *agouti.Page
 
-// ConfigをScenarioに渡す方がマシそう
 type Crawler struct {
 	ID           string
 	Pass         string
