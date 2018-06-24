@@ -64,7 +64,7 @@ func main() {
 	page.Screenshot("log/08.png")
 
 	// ご注文の確認へ進む
-	page.Find("#timeAndPay > div > dl.payInfo_tb2.dlvtime > dd > select").Select("2000")
+	page.Find("#timeAndPay > div > dl.payInfo_tb2.dlvtime > dd > select").Select("２０時－２１時にお届け！")
 	page.Screenshot("log/09.png")
 	page.FindByID("goOrderConfirmFrom1hour04").Click()
 	page.Screenshot("log/10.png")
