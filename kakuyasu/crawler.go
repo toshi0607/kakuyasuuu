@@ -1,8 +1,7 @@
 package kakuyasu
 
-import "github.com/sclevine/agouti"
-
 import (
+	"github.com/sclevine/agouti"
 	"github.com/prometheus/common/log"
 )
 
@@ -14,20 +13,24 @@ type Crawler struct {
 	DeliveryTime string
 }
 
-func init() {
+func initDriver() agouti.WebDriver {
 	driver := agouti.ChromeDriver()
 	if err := driver.Start(); err != nil {
 		log.Fatalf("failed to start driver:%v", err)
 	}
-	defer driver.Stop()
 	p, err := driver.NewPage(agouti.Browser("chrome"))
 	if err != nil {
 		log.Fatalf("failed to open page:%v", err)
 	}
 	page = p
+	return *driver
 }
 
 func (s Crawler) Execute() {
+	d := initDriver()
+	defer d.Stop()
+
+	start()
 	login(s.ID, s.Pass)
 	selectPresetOrder()
 	addToCart()
@@ -41,6 +44,12 @@ func (s Crawler) Execute() {
 
 func handlePage() {
 
+}
+
+func start() {
+	if err := page.Navigate("https://www.kakuyasu.co.jp/ec/common/CSfLogin.jsp?transfer=../member/CPmPersonalShop_001.jsp"); err != nil {
+		log.Fatalf("Failed to navigate:%v", err)
+	}
 }
 
 func login(id, pass string) {
